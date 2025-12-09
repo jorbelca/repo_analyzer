@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { extractInfo } from "./extractInfo.js";
 
 export async function fetchReposFromGitHub(username) {
   console.log(`Fetching repositories for user: ${username}`);
@@ -47,7 +48,9 @@ export async function downloadRepo(repoOwner, repoName) {
     }
     const data = await response.blob();
     console.log(`Repository downloaded successfully from: ${repoUrl}`);
-    await saveRepoData(repoOwner, repoName, data);
+    const path = await saveRepoData(repoOwner, repoName, data);
+    await extractInfo(path);
+    return;
   } catch (error) {
     console.error("Error downloading repository:", error);
     throw error;
@@ -61,10 +64,9 @@ async function saveRepoData(owner, repoName, data) {
     await fs.mkdir(dirPath, { recursive: true });
     const buffer = Buffer.from(await data.arrayBuffer());
     await fs.writeFile(path, buffer);
-    console.log(`Repository data saved to ${path}`);
-    return true;
+    return path;
   } catch (error) {
     console.error("Error saving repository data:", error);
-    return false;
+    throw error;
   }
 }
