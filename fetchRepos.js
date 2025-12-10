@@ -49,7 +49,8 @@ export async function downloadRepo(repoOwner, repoName) {
     const data = await response.blob();
     console.log(`Repository downloaded successfully from: ${repoUrl}`);
     const path = await saveRepoData(repoOwner, repoName, data);
-    await extractInfo(path);
+    const tree = await extractInfo(path);
+
     return;
   } catch (error) {
     console.error("Error downloading repository:", error);
@@ -67,6 +68,16 @@ async function saveRepoData(owner, repoName, data) {
     return path;
   } catch (error) {
     console.error("Error saving repository data:", error);
+    throw error;
+  }
+}
+
+
+async function cleanRepo(path){
+  try {
+    await fs.rm(path, { recursive: true, force: true });
+  } catch (error) {
+    console.error("Error cleaning up repository data:", error);
     throw error;
   }
 }

@@ -1,0 +1,84 @@
+{
+  "factores_calidad_codigo": {
+    "arquitectura_y_diseno": {
+      "separacion_responsabilidades": {
+        "descripcion": "¿Cada módulo/clase tiene una única razón para cambiar?",
+        "principio": "SOLID"
+      },
+      "acoplamiento": {
+        "descripcion": "¿Qué tan interdependientes son los componentes?"
+      },
+      "cohesion": {
+        "descripcion": "¿Las funciones relacionadas están agrupadas lógicamente?"
+      },
+      "escalabilidad_diseno": {
+        "descripcion": "¿Soporta crecimiento sin refactorización masiva?"
+      }
+    },
+    "calidad_codigo": {
+      "legibilidad": {
+        "descripcion": "Nombres descriptivos, lógica clara, complejidad ciclomática baja"
+      },
+      "dry": {
+        "descripcion": "¿Hay duplicación innecesaria?",
+        "principio": "Don't Repeat Yourself"
+      },
+      "tamano_funciones": {
+        "descripcion": "¿Son pequeñas y hacen una cosa bien?"
+      },
+      "manejo_errores": {
+        "descripcion": "¿Consistente y apropiado?"
+      }
+    },
+    "testing": {
+      "cobertura": {
+        "descripcion": "¿Qué % del código está testeado?"
+      },
+      "tipos_tests": {
+        "descripcion": "Unitarios, integración, e2e"
+      },
+      "calidad_tests": {
+        "descripcion": "¿Son mantenibles y prueban comportamiento real?"
+      }
+    },
+    "documentacion": {
+      "readme": {
+        "descripcion": "Setup claro, propósito, arquitectura general"
+      },
+      "codigo_autodocumentado": {
+        "descripcion": "¿El código explica su intención?"
+      },
+      "comentarios": {
+        "descripcion": "Solo donde añaden valor (el 'por qué', no el 'qué')"
+      },
+      "diagramas": {
+        "descripcion": "Para arquitecturas complejas"
+      }
+    },
+    "gestion_repo": {
+      "historial_commits": {
+        "descripcion": "Mensajes claros, commits atómicos"
+      },
+      "branching_strategy": {
+        "descripcion": "¿Hay un flujo definido?"
+      },
+      "ci_cd": {
+        "descripcion": "¿Automatización de tests, linting, deployment?"
+      },
+      "dependencies": {
+        "descripcion": "¿Actualizadas? ¿Sin vulnerabilidades conocidas?"
+      }
+    },
+    "mantenibilidad": {
+      "deuda_tecnica": {
+        "descripcion": "¿Hay TODOs antiguos, hacks documentados?"
+      },
+      "tiempo_onboarding": {
+        "descripcion": "¿Un dev nuevo puede contribuir rápido?"
+      },
+      "frecuencia_cambios": {
+        "descripcion": "¿El código se modifica constantemente por bugs?"
+      }
+    }
+  }
+}

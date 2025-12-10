@@ -22,8 +22,10 @@ async function main() {
 
     const repoSelected = await repoSelect.run();
     console.log("You selected:", repoSelected);
-   
-    repoSelect.map((repo) => downloadRepo(response.username, repo.name));
+    
+    for (const repoName of repoSelected) {
+      await downloadRepo(response.username, repoName);
+    }
     return;
   } catch (error) {
     console.error("An error occurred:", error);

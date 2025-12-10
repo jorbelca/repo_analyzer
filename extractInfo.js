@@ -6,7 +6,7 @@ export async function extractInfo(zipPath) {
   const finalPath = zipPath.replace(".zip", "");
 
   try {
-    // Limpiar si existe
+    // Limpiar si ya existe el mismo fichero
     if (fs.existsSync(finalPath)) {
       fs.rmSync(finalPath, { recursive: true, force: true });
     }
@@ -37,7 +37,7 @@ export async function extractInfo(zipPath) {
     const tree = generateTree(finalPath);
     console.log("\n📂 Estructura del repositorio:\n");
     console.log(tree);
-    return finalPath;
+    return tree;
   } catch (error) {
     // Cleanup
     if (fs.existsSync(finalPath)) {
