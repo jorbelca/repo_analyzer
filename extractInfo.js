@@ -37,7 +37,10 @@ export async function extractInfo(zipPath) {
     const tree = generateTree(finalPath);
     console.log("\n📂 Estructura del repositorio:\n");
     console.log(tree);
-    return tree;
+    // Limpiar el repositorio según extensiones
+    await cleanRepo(finalPath);
+    console.log(`Repositorio limpio en: ${finalPath}`);
+    return finalPath;
   } catch (error) {
     // Cleanup
     if (fs.existsSync(finalPath)) {
@@ -86,4 +89,87 @@ function generateTree(dirPath, prefix = "", isLast = true) {
   });
 
   return tree;
+}
+
+async function cleanRepo(repoPath) {
+  try {
+    const extensionsContent = await fs.promises.readFile(
+      "extensiones_analizar.txt",
+      "utf-8"
+    );
+    const allowedExtensions = extensionsContent
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith("#"))
+      .flatMap((line) => line.split(/\s+/))
+      .filter((pattern) => !pattern.startsWith("!"))
+      .map((pattern) => {
+        const match = pattern.match(/\.(\w+)$/);
+        return match ? match[0] : null;
+      })
+      .filter(Boolean);
+
+    const uniqueExtensions = new Set(allowedExtensions);
+    console.log("Manteniendo SOLO extensiones:", [...uniqueExtensions]);
+
+    async function walkAndFilter(currentPath) {
+      const entries = await fs.promises.readdir(currentPath, {
+        withFileTypes: true,
+      });
+
+      for (const entry of entries) {
+        const fullPath = path.join(currentPath, entry.name);
+
+        if (entry.isDirectory()) {
+          await walkAndFilter(fullPath);
+          // eliminar carpeta si queda vacía
+          const remaining = await fs.promises.readdir(fullPath);
+          if (remaining.length === 0) {
+            await fs.promises.rmdir(fullPath);
+          }
+        }         
+                 else {
+                  const ext = path.extname(entry.name);
+                  const basename = path.basename(entry.name);
+                  
+                  // Lista de archivos sin extensión permitidos
+                  const allowedNoExt = ['Dockerfile', 'Makefile', 'Jenkinsfile'];
+                  
+                  if (!ext) {
+                    // Si no tiene extensión, solo mantener si está en allowedNoExt
+                    if (!allowedNoExt.includes(basename)) {
+                      await fs.promises.rm(fullPath);
+                      console.log(`🗑️  Borrado: ${fullPath}`);
+                    }
+                  } else if (!uniqueExtensions.has(ext)) {
+                    // Si tiene extensión pero no está permitida
+                    await fs.promises.rm(fullPath);
+                    console.log(`🗑️  Borrado: ${fullPath}`);
+                  }
+                }
+        
+      }
+    }
+    await walkAndFilter(repoPath);
+    console.log("Limpieza por extensiones completada.");
+    return repoPath;
+  } catch (error) {
+    console.error("Error cleaning repository:", error);
+    throw error;
+  }
+}
+
+
+
+async function repoFilesToText(path){
+  try {
+
+
+
+
+
+  } catch (error) {
+    console.error("Error listing repository structure:", error);
+    throw error;
+  }
 }

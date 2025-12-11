@@ -1,4 +1,7 @@
 # CODIGO FUENTE
+#HTML
+**/*.html
+
 # JavaScript/TypeScript
 **/*.js **/*.jsx **/*.ts **/*.tsx **/*.mjs **/*.cjs
 !**/*.min.js !**/*.bundle.js !**/*.config.js
