@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import AdmZip from "adm-zip";
+import { sendRequest } from "./sendRequest.js";
 
 export async function extractInfo(zipPath) {
   const finalPath = zipPath.replace(".zip", "");
@@ -40,6 +41,14 @@ export async function extractInfo(zipPath) {
     // Limpiar el repositorio según extensiones
     await cleanRepo(finalPath);
     console.log(`Repositorio limpio en: ${finalPath}`);
+
+    // Convertir archivos a texto
+    const archivosEnTexto = await repoFilesToText(finalPath);
+
+    //peticion a API
+    const response = await sendRequest(tree, archivosEnTexto);
+    console.log("Respuesta de la API:", response);
+
     return finalPath;
   } catch (error) {
     // Cleanup
@@ -127,27 +136,25 @@ async function cleanRepo(repoPath) {
           if (remaining.length === 0) {
             await fs.promises.rmdir(fullPath);
           }
-        }         
-                 else {
-                  const ext = path.extname(entry.name);
-                  const basename = path.basename(entry.name);
-                  
-                  // Lista de archivos sin extensión permitidos
-                  const allowedNoExt = ['Dockerfile', 'Makefile', 'Jenkinsfile'];
-                  
-                  if (!ext) {
-                    // Si no tiene extensión, solo mantener si está en allowedNoExt
-                    if (!allowedNoExt.includes(basename)) {
-                      await fs.promises.rm(fullPath);
-                      console.log(`🗑️  Borrado: ${fullPath}`);
-                    }
-                  } else if (!uniqueExtensions.has(ext)) {
-                    // Si tiene extensión pero no está permitida
-                    await fs.promises.rm(fullPath);
-                    console.log(`🗑️  Borrado: ${fullPath}`);
-                  }
-                }
-        
+        } else {
+          const ext = path.extname(entry.name);
+          const basename = path.basename(entry.name);
+
+          // Lista de archivos sin extensión permitidos
+          const allowedNoExt = ["Dockerfile", "Makefile", "Jenkinsfile"];
+
+          if (!ext) {
+            // Si no tiene extensión, solo mantener si está en allowedNoExt
+            if (!allowedNoExt.includes(basename)) {
+              await fs.promises.rm(fullPath);
+              console.log(`🗑️  Borrado: ${fullPath}`);
+            }
+          } else if (!uniqueExtensions.has(ext)) {
+            // Si tiene extensión pero no está permitida
+            await fs.promises.rm(fullPath);
+            console.log(`🗑️  Borrado: ${fullPath}`);
+          }
+        }
       }
     }
     await walkAndFilter(repoPath);
@@ -159,15 +166,43 @@ async function cleanRepo(repoPath) {
   }
 }
 
-
-
-async function repoFilesToText(path){
+async function repoFilesToText(repoPath) {
   try {
+    let output = "";
 
+    async function walkAndRead(currentPath, relativePath = "") {
+      const entries = await fs.promises.readdir(currentPath, {
+        withFileTypes: true,
+      });
 
+      for (const entry of entries) {
+        const fullPath = path.join(currentPath, entry.name);
+        const relPath = relativePath
+          ? `${relativePath}/${entry.name}`
+          : entry.name;
 
+        if (entry.isDirectory()) {
+          await walkAndRead(fullPath, relPath);
+        } else {
+          try {
+            const content = await fs.promises.readFile(fullPath, "utf-8");
+            output += `${relPath}:[${content}]\n\n`;
+          } catch (error) {
+            // Si no se puede leer como texto (ej: binarios), lo saltamos
+            console.warn(`⚠️  No se pudo leer: ${relPath}`);
+          }
+        }
+      }
+    }
 
+    await walkAndRead(repoPath);
 
+    // Guardar en archivo de texto
+    const outputPath = `${repoPath}_content.txt`;
+    await fs.promises.writeFile(outputPath, output, "utf-8");
+    console.log(`📄 Contenido del repo guardado en: ${outputPath}`);
+
+    return output;
   } catch (error) {
     console.error("Error listing repository structure:", error);
     throw error;

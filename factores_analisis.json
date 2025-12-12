@@ -1,84 +1,113 @@
 {
-  "factores_calidad_codigo": {
-    "arquitectura_y_diseno": {
-      "separacion_responsabilidades": {
-        "descripcion": "¿Cada módulo/clase tiene una única razón para cambiar?",
-        "principio": "SOLID"
+  "code_quality_factors": {
+    "architecture_and_design": {
+      "separation_of_concerns": {
+        "description": "Does each module/class have a single reason to change?",
+        "principle": "Single Responsibility Principle (SOLID)",
+        "evaluation": "Rate adherence to SRP and identify violations"
       },
-      "acoplamiento": {
-        "descripcion": "¿Qué tan interdependientes son los componentes?"
+      "coupling": {
+        "description": "How interdependent are the components?",
+        "evaluation": "Assess tight vs. loose coupling, identify problematic dependencies"
       },
       "cohesion": {
-        "descripcion": "¿Las funciones relacionadas están agrupadas lógicamente?"
+        "description": "Are related functions logically grouped together?",
+        "evaluation": "Check if modules have high cohesion and clear boundaries"
       },
-      "escalabilidad_diseno": {
-        "descripcion": "¿Soporta crecimiento sin refactorización masiva?"
+      "design_scalability": {
+        "description": "Can the system grow without massive refactoring?",
+        "evaluation": "Identify architectural bottlenecks and extensibility issues"
       }
     },
-    "calidad_codigo": {
-      "legibilidad": {
-        "descripcion": "Nombres descriptivos, lógica clara, complejidad ciclomática baja"
+    "code_quality": {
+      "readability": {
+        "description": "Descriptive names, clear logic, low cyclomatic complexity",
+        "evaluation": "Measure complexity metrics, naming consistency, code clarity"
       },
-      "dry": {
-        "descripcion": "¿Hay duplicación innecesaria?",
-        "principio": "Don't Repeat Yourself"
+      "dry_principle": {
+        "description": "Is there unnecessary code duplication?",
+        "principle": "Don't Repeat Yourself",
+        "evaluation": "Identify duplicated logic, magic numbers, repeated patterns"
       },
-      "tamano_funciones": {
-        "descripcion": "¿Son pequeñas y hacen una cosa bien?"
+      "function_size": {
+        "description": "Are functions small and focused on doing one thing well?",
+        "evaluation": "Check function length and complexity"
       },
-      "manejo_errores": {
-        "descripcion": "¿Consistente y apropiado?"
+      "error_handling": {
+        "description": "Is it consistent and appropriate?",
+        "evaluation": "Review exception handling, edge cases, failure scenarios"
       }
     },
     "testing": {
-      "cobertura": {
-        "descripcion": "¿Qué % del código está testeado?"
+      "coverage": {
+        "description": "What percentage of code is tested?",
+        "evaluation": "Measure test coverage and identify untested critical paths"
       },
-      "tipos_tests": {
-        "descripcion": "Unitarios, integración, e2e"
+      "test_types": {
+        "description": "Unit, integration, and e2e tests",
+        "evaluation": "Assess test pyramid balance and appropriate test levels"
       },
-      "calidad_tests": {
-        "descripcion": "¿Son mantenibles y prueban comportamiento real?"
+      "test_quality": {
+        "description": "Are tests maintainable and testing real behavior?",
+        "evaluation": "Check for brittle tests, proper assertions, test independence"
       }
     },
-    "documentacion": {
+    "documentation": {
       "readme": {
-        "descripcion": "Setup claro, propósito, arquitectura general"
+        "description": "Clear setup, purpose, general architecture",
+        "evaluation": "Assess completeness and clarity of onboarding docs"
       },
-      "codigo_autodocumentado": {
-        "descripcion": "¿El código explica su intención?"
+      "self_documenting_code": {
+        "description": "Does the code explain its intent?",
+        "evaluation": "Check if code structure and naming reduce comment needs"
       },
-      "comentarios": {
-        "descripcion": "Solo donde añaden valor (el 'por qué', no el 'qué')"
+      "comments": {
+        "description": "Only where they add value (the 'why', not the 'what')",
+        "evaluation": "Review comment quality and necessity"
       },
-      "diagramas": {
-        "descripcion": "Para arquitecturas complejas"
+      "diagrams": {
+        "description": "For complex architectures",
+        "evaluation": "Check for architecture diagrams, flow charts where needed"
       }
     },
-    "gestion_repo": {
-      "historial_commits": {
-        "descripcion": "Mensajes claros, commits atómicos"
+    "repository_management": {
+      "commit_history": {
+        "description": "Clear messages, atomic commits",
+        "evaluation": "Review commit message quality and granularity"
       },
       "branching_strategy": {
-        "descripcion": "¿Hay un flujo definido?"
+        "description": "Is there a defined workflow?",
+        "evaluation": "Assess branch naming, merge strategy, release process"
       },
       "ci_cd": {
-        "descripcion": "¿Automatización de tests, linting, deployment?"
+        "description": "Automation of tests, linting, deployment?",
+        "evaluation": "Check pipeline completeness and reliability"
       },
       "dependencies": {
-        "descripcion": "¿Actualizadas? ¿Sin vulnerabilidades conocidas?"
+        "description": "Are they up-to-date? Any known vulnerabilities?",
+        "evaluation": "Audit dependency versions and security issues"
       }
     },
-    "mantenibilidad": {
-      "deuda_tecnica": {
-        "descripcion": "¿Hay TODOs antiguos, hacks documentados?"
+    "maintainability": {
+      "technical_debt": {
+        "description": "Are there old TODOs, documented hacks?",
+        "evaluation": "Identify and categorize technical debt items"
       },
-      "tiempo_onboarding": {
-        "descripcion": "¿Un dev nuevo puede contribuir rápido?"
+      "onboarding_time": {
+        "description": "Can a new developer contribute quickly?",
+        "evaluation": "Assess setup complexity and documentation quality"
       },
-      "frecuencia_cambios": {
-        "descripcion": "¿El código se modifica constantemente por bugs?"
+      "change_frequency": {
+        "description": "Is the code constantly modified due to bugs?",
+        "evaluation": "Analyze bug-fix commits vs. feature commits ratio"
       }
     }
-  }
+  },
+  "deliverables": {
+    "scoring": "For each factor, provide a score from 1-10 (10 = excellent)",
+    "recommendations": "Offer specific, actionable improvements for each evaluated area",
+    "priority_matrix": "Rank recommendations by impact vs. effort",
+    "risk_assessment": "Highlight critical issues requiring immediate attention"
+  },
+  "query":"Imagine you are a senior software architect conducting a comprehensive code quality audit. Analyze the provided codebase and deliver a detailed evaluation based on the following quality factors"
 }
