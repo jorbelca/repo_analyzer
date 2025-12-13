@@ -32,22 +32,18 @@ export async function extractInfo(zipPath) {
     fs.rmSync(tempPath, { recursive: true, force: true });
     // Eliminar el ZIP
     fs.rmSync(zipPath, { force: true });
-    console.log(`ZIP eliminado: ${zipPath}`);
 
     // Generar árbol del repositorio
     const tree = generateTree(finalPath);
-    console.log("\n📂 Estructura del repositorio:\n");
-    console.log(tree);
+
     // Limpiar el repositorio según extensiones
     await cleanRepo(finalPath);
-    console.log(`Repositorio limpio en: ${finalPath}`);
 
     // Convertir archivos a texto
     const archivosEnTexto = await repoFilesToText(finalPath);
 
     //peticion a API
     const response = await sendRequest(tree, archivosEnTexto);
-    console.log("Respuesta de la API:", response);
 
     return finalPath;
   } catch (error) {
@@ -103,15 +99,15 @@ function generateTree(dirPath, prefix = "", isLast = true) {
 async function cleanRepo(repoPath) {
   try {
     const extensionsContent = await fs.promises.readFile(
-      "extensiones_analizar.txt",
+      "config/extensiones_analizar.txt",
       "utf-8"
     );
     const allowedExtensions = extensionsContent
       .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith("#"))
+      .filter(
+        (line) => line.trim() && !line.startsWith("#") && !line.startsWith("!")
+      )
       .flatMap((line) => line.split(/\s+/))
-      .filter((pattern) => !pattern.startsWith("!"))
       .map((pattern) => {
         const match = pattern.match(/\.(\w+)$/);
         return match ? match[0] : null;
@@ -119,8 +115,34 @@ async function cleanRepo(repoPath) {
       .filter(Boolean);
 
     const uniqueExtensions = new Set(allowedExtensions);
-    console.log("Manteniendo SOLO extensiones:", [...uniqueExtensions]);
-
+    // Carpetas a eliminar completamente
+    const foldersToDelete = [
+      "vendor", // PHP
+      "node_modules", // JS
+      "target", // Java/Maven
+      "build", // Java/Gradle
+      "out", // Java/IntelliJ
+      ".gradle", // Gradle cache
+      ".m2", // Maven cache
+      "storage", // Laravel
+      "bootstrap/cache", // Laravel
+      "public/build", // Laravel Mix/Vite
+      "public/fonts",
+      "public/images",
+      "public/icons",
+      "public/imgs",
+      "public/capturas",
+      "dist", // JS build
+      "coverage", // Test coverage
+      ".next", // Next.js
+      ".nuxt", // Nuxt.js
+    ];
+    for (const folder of foldersToDelete) {
+      const folderPath = path.join(repoPath, folder);
+      if (fs.existsSync(folderPath)) {
+        await fs.promises.rm(folderPath, { recursive: true, force: true });
+      }
+    }
     async function walkAndFilter(currentPath) {
       const entries = await fs.promises.readdir(currentPath, {
         withFileTypes: true,
@@ -142,23 +164,43 @@ async function cleanRepo(repoPath) {
 
           // Lista de archivos sin extensión permitidos
           const allowedNoExt = ["Dockerfile", "Makefile", "Jenkinsfile"];
+          const filesToDelete = [
+            "package-lock.json",
+            "yarn.lock",
+            "pnpm-lock.yaml",
+            "composer.lock",
+            "vite.config.js",
+            "vite.config.ts",
+            "webpack.config.js",
+            "tailwind.config.js",
+            "postcss.config.js",
+            "phpunit.xml",
+            "jest.config.js",
+            "cypress.config.js",
+            "pom.xml",
+            "build.gradle",
+            "build.gradle.kts",
+            "settings.gradle",
+            "gradlew",
+            "gradlew.bat",
+            "mvnw",
+            "mvnw.cmd",
+          ];
 
-          if (!ext) {
-            // Si no tiene extensión, solo mantener si está en allowedNoExt
+          if (filesToDelete.includes(basename)) {
+            await fs.promises.rm(fullPath);
+          } else if (!ext) {
             if (!allowedNoExt.includes(basename)) {
               await fs.promises.rm(fullPath);
-              console.log(`🗑️  Borrado: ${fullPath}`);
             }
           } else if (!uniqueExtensions.has(ext)) {
-            // Si tiene extensión pero no está permitida
             await fs.promises.rm(fullPath);
-            console.log(`🗑️  Borrado: ${fullPath}`);
           }
         }
       }
     }
     await walkAndFilter(repoPath);
-    console.log("Limpieza por extensiones completada.");
+
     return repoPath;
   } catch (error) {
     console.error("Error cleaning repository:", error);
@@ -200,7 +242,6 @@ async function repoFilesToText(repoPath) {
     // Guardar en archivo de texto
     const outputPath = `${repoPath}_content.txt`;
     await fs.promises.writeFile(outputPath, output, "utf-8");
-    console.log(`📄 Contenido del repo guardado en: ${outputPath}`);
 
     return output;
   } catch (error) {

@@ -1,0 +1,36 @@
+{
+  "code_quality_factors": {
+    "architecture": {
+      "description": "System design, separation of concerns, and modularity",
+      "key_aspects": ["modularity", "separation of concerns", "scalability", "design patterns"]
+    },
+    "code_quality": {
+      "description": "Readability, maintainability, and best practices",
+      "key_aspects": ["naming conventions", "DRY principle", "complexity", "error handling"]
+    },
+    "testing": {
+      "description": "Test coverage and quality assurance",
+      "key_aspects": ["test coverage", "test types", "test quality"]
+    },
+    "documentation": {
+      "description": "Code documentation and project guidance",
+      "key_aspects": ["README quality", "code comments", "setup instructions"]
+    },
+    "security": {
+      "description": "Security practices and vulnerability management",
+      "key_aspects": ["authentication", "input validation", "vulnerabilities"]
+    },
+    "performance": {
+      "description": "Code efficiency and optimization",
+      "key_aspects": ["query optimization", "caching", "resource management"]
+    },
+    "repository_management": {
+      "description": "Version control and DevOps practices",
+      "key_aspects": ["commit quality", "CI/CD", "dependency management"]
+    }
+  },
+  "output_format": {
+    "instructions": "Provide a clean, readable analysis using only headings and paragraphs (no tables)"
+  },
+  "query": "You are a senior software architect conducting a code quality audit. Analyze this codebase using ONLY headings and paragraphs (NO TABLES). Use this exact format:\n\n═══════════════════════════════════════════════════════════════\n                    CODE QUALITY ASSESSMENT\n═══════════════════════════════════════════════════════════════\n\nPROJECT OVERVIEW\n───────────────────────────────────────────────────────────────\n[2-3 sentences: what the project does, tech stack, main purpose]\n\n\nOVERALL SCORE: X.X/10\n\n\n═══════════════════════════════════════════════════════════════\n                      FACTOR ANALYSIS\n═══════════════════════════════════════════════════════════════\n\n1. ARCHITECTURE (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n2. CODE QUALITY (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n3. TESTING (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n4. DOCUMENTATION (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n5. SECURITY (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n6. PERFORMANCE (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n7. REPOSITORY MANAGEMENT (Score: X/10)\n───────────────────────────────────────────────────────────────\nStrengths:\n  • [Strength 1]\n  • [Strength 2]\n  • [Strength 3]\n\nWeaknesses:\n  • [Weakness 1]\n  • [Weakness 2]\n  • [Weakness 3]\n\n\n═══════════════════════════════════════════════════════════════\n                    EXECUTIVE SUMMARY\n═══════════════════════════════════════════════════════════════\n\nKEY STRENGTHS\n───────────────────────────────────────────────────────────────\n[Paragraph highlighting the 3-4 most impressive aspects of the\ncodebase with specific examples]\n\n\nCRITICAL ISSUES\n───────────────────────────────────────────────────────────────\n[Paragraph explaining the 3-4 most urgent problems that need\nimmediate attention, with impact explanation]\n\n\nPRIORITY ACTIONS\n───────────────────────────────────────────────────────────────\n1. [Action 1] - Impact: [High/Medium/Low], Effort: [High/Medium/Low]\n   [Brief explanation]\n\n2. [Action 2] - Impact: [High/Medium/Low], Effort: [High/Medium/Low]\n   [Brief explanation]\n\n3. [Action 3] - Impact: [High/Medium/Low], Effort: [High/Medium/Low]\n   [Brief explanation]\n\n\nFINAL VERDICT\n───────────────────────────────────────────────────────────────\n[2-3 sentences with overall assessment, production readiness,\nand deployment recommendations]\n\n\n═══════════════════════════════════════════════════════════════\n\nRULES:\n- Keep each bullet point under 15 words\n- Be specific and actionable\n- No generic statements\n- Focus on high-impact insights"
+}

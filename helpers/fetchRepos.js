@@ -31,7 +31,7 @@ export async function fetchReposFromGitHub(username) {
 
   const repoArray = allRepos.map((repo) => ({
     name: repo.name, // lo que se muestra
-    value: repo.html_url, // o repo.html_url, según lo que quieras usar
+    value: repo.html_url, 
   }));
   console.log(`Total repos for ${username}: ${repoArray.length}`);
   return repoArray;
@@ -39,7 +39,7 @@ export async function fetchReposFromGitHub(username) {
 
 export async function downloadRepo(repoOwner, repoName) {
   const repoUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/zipball`;
-  console.log(repoUrl);
+  
 
   try {
     const response = await fetch(repoUrl);
@@ -73,11 +73,3 @@ async function saveRepoData(owner, repoName, data) {
 }
 
 
-async function cleanRepo(path){
-  try {
-    await fs.rm(path, { recursive: true, force: true });
-  } catch (error) {
-    console.error("Error cleaning up repository data:", error);
-    throw error;
-  }
-}

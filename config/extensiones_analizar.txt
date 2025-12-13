@@ -1,0 +1,133 @@
+# ============================================
+# CÓDIGO FUENTE - PHP, JAVA, JAVASCRIPT
+# ============================================
+
+# PHP (Laravel, Symfony, etc.)
+**/*.php
+
+# Java (Spring, Jakarta EE, etc.)
+**/*.java
+**/*.kt
+**/*.kts
+
+# JavaScript/TypeScript (React, Vue, Angular, Node.js)
+**/*.js
+**/*.jsx
+**/*.ts
+**/*.tsx
+**/*.vue
+**/*.mjs
+**/*.cjs
+
+# HTML/CSS (Frontend)
+**/*.html
+**/*.css
+**/*.scss
+**/*.sass
+**/*.less
+
+# ============================================
+# CONFIGURACIÓN DE APLICACIÓN (NO TOOLING)
+# ============================================
+
+# PHP - Config
+**/config/*.php
+**/routes/*.php
+**/.env.example
+
+# Java - Config
+**/application.properties
+**/application.yml
+**/application.yaml
+**/src/main/resources/*.properties
+**/src/main/resources/*.yml
+
+# JavaScript - Config mínimo
+**/.env.example
+**/tsconfig.json
+
+# ============================================
+# BASE DE DATOS
+# ============================================
+
+# PHP Migrations
+**/database/migrations/*.php
+**/database/seeders/*.php
+
+# Java Migrations (Flyway/Liquibase)
+**/db/migration/*.sql
+**/db/changelog/*.xml
+
+# SQL general
+**/*.sql
+
+# ============================================
+# EXCLUSIONES EXPLÍCITAS
+# ============================================
+
+# Dependencias
+!**/vendor/**
+!**/node_modules/**
+!**/target/**
+!**/build/**
+!**/dist/**
+!**/out/**
+!**/.gradle/**
+!**/.m2/**
+
+# Build artifacts
+!**/public/build/**
+!**/storage/**
+!**/bootstrap/cache/**
+!**/*.class
+!**/*.jar
+!**/*.war
+
+# Lock files y configs de herramientas
+!**/composer.lock
+!**/package-lock.json
+!**/yarn.lock
+!**/pnpm-lock.yaml
+!**/package.json
+!**/vite.config.js
+!**/vite.config.ts
+!**/webpack.config.js
+!**/tailwind.config.js
+!**/postcss.config.js
+!**/babel.config.js
+!**/jest.config.js
+!**/phpunit.xml
+!**/pom.xml
+!**/build.gradle
+!**/build.gradle.kts
+!**/settings.gradle
+!**/gradlew
+!**/gradlew.bat
+!**/mvnw
+!**/mvnw.cmd
+
+# Assets estáticos
+!**/*.png
+!**/*.jpg
+!**/*.jpeg
+!**/*.gif
+!**/*.svg
+!**/*.webp
+!**/*.ico
+!**/*.woff
+!**/*.woff2
+!**/*.ttf
+!**/*.eot
+!**/*.otf
+
+# Documentación
+!**/README.md
+!**/LICENSE
+!**/CHANGELOG.md
+!**/*.md
+
+# Archivos temporales
+!**/*.log
+!**/*.cache
+!**/.DS_Store
+!**/Thumbs.db

@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "adm-zip": "^0.5.16",
-    "enquirer": "^2.4.1"
+    "enquirer": "^2.4.1",
+    "ora": "^9.0.0"
   }
 }
